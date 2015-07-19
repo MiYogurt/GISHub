@@ -11,8 +11,8 @@
             <li><a href="{{ url('/hub/something') }}"><i class="icon icon-bullhorn"></i> <span>合作信息</span></a></li>
             <li class="submenu"> <a href="#"><i class="icon icon-inbox"></i> <span>项目</span> <span class="label label-important">2</span></a>
                 <ul>
-                    <li><a href="form-common.html">创建项目</a></li>
-                    <li><a href="form-validation.html">查看所有项目</a></li>
+                    <li><a href="{{ url('hub/project/create') }}">创建项目</a></li>
+                    <li><a href="{{ url('hub/project') }}">查看所有项目</a></li>
                 </ul>
             </li>
             <li class="submenu"> <a href="#"><i class="icon icon-star"></i> <span>分享</span> <span class="label label-important">3</span></a>
@@ -22,7 +22,7 @@
                     <li><a href="{{ url('hub/shenghuo') }}">生活</a></li>
                 </ul>
             </li>
-
+            <li> <a href="{{ url('/hub/time') }}"><i class="icon icon-bell"></i> <span>叮咚时间助手</span></a> </li>
         </ul>
     </div>
     <!--sidebar-menu-->
@@ -37,7 +37,7 @@
         @if(isset($error))
             <div class="alert alert-error">
                 <button class="close" data-dismiss="alert">×</button>
-                <strong>Error!</strong> {{ $error }}
+                <strong>Error!</strong> {{ $error->first() }}
             </div>
         @endif
         <!--Action boxes-->
@@ -54,6 +54,12 @@
                             <label class="control-label">用户名 :</label>
                             <div class="controls">
                                 <input type="text" name="name" class="span8" placeholder="用户名...">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">电话 :</label>
+                            <div class="controls">
+                                <input type="tel" class="span8" name="tel" placeholder="联系方式...">
                             </div>
                         </div>
                         <div class="control-group">

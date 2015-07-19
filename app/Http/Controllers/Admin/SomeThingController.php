@@ -42,7 +42,7 @@ class SomeThingController extends Controller {
                 'message'=>$request->input('message')
             ]
         );
-        return view('index')->with('message',"后台已经接受，我们会在工作日，以最快的时间回复您。");
+        return redirect('/')->with('message',"后台已经接受，我们会在工作日，以最快的时间回复您。");
 	}
 
 	/**

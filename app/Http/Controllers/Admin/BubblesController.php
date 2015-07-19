@@ -15,8 +15,8 @@ class BubblesController extends Controller {
 	 */
 	public function index()
 	{
-        $bubbles = Bubble::orderBy('id','desc')->get();
-        return view('admin.bubble',['bubbles'=>$bubbles]);
+		$bubbles = Bubble::orderBy('id','desc')->get();
+        return view('admin.bubble',['bubbles'=>$bubbles,'bubble_one'=>'']);
 	}
 
 	/**
@@ -67,7 +67,9 @@ class BubblesController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$bubble_one = Bubble::find($id);
+		$bubbles = Bubble::orderBy('id','desc')->get();
+		return view('admin.bubble',['bubble_one'=>$bubble_one,'bubbles'=>$bubbles]);
 	}
 
 	/**
@@ -76,9 +78,19 @@ class BubblesController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($id,Request $request)
 	{
-		//
+		$bubble_one = Bubble::find($id);
+
+		$bubble_one->content = $request->input('content');
+		$bubble_one->created_at = date('Y-m-d', time());
+
+		if ($bubble_one->save()) {
+			return redirect('/hub/bubble');
+		}else{
+			return redirect()->back()->with('error','出错啦!');
+		}
+
 	}
 
 	/**
@@ -89,7 +101,8 @@ class BubblesController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		Bubble::find($id)->delete();
+		return redirect('/hub/bubble');
 	}
 
 }

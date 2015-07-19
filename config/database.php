@@ -55,7 +55,7 @@ return [
 		'mysql' => [
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'yogurtt',
+			'database'  => 'gis',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

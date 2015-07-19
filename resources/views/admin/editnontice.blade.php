@@ -19,11 +19,9 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="_method" value="PUT"/>
     <div class="editor" style="width: 100%;">
-        <textarea name="notice" id='myEditor'>
-            {{ $notice }}
-        </textarea>
+        <textarea name="notice" id='myEditor'>{{ $notice }}</textarea>
     </div>
-    <input type="submit" value="提交" style="background: cadetblue;border: 0;outline: none;float: right;margin-right: 20px;"/>
+    <input type="submit" value="提交" class="btn btn-primary" style="outline: none;float: right;margin-right: 20px;"/>
 </form>
 
 
@@ -61,4 +59,3 @@
 <!-- end templatemo back to top js -->
 </body>
 </html>
-

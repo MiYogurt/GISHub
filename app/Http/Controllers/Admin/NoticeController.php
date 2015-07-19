@@ -13,11 +13,13 @@ class NoticeController extends Controller {
     {
         $user = \DB::table('users')->count();
         $share = \DB::table('shares')->count();
+        $project = \DB::table('projects')->count();
         $notice = \DB::table('notice')->find(1);
         $data = array(
             'user' => $user,
             'notice'=>EndaEditor::MarkDecode($notice->content),
             'share'=>$share,
+            'project'=>$project,
         );
         return view('admin.home',['data'=>$data]);
     }

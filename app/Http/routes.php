@@ -35,20 +35,36 @@ Route::controllers([
 Route::get('/',function(){
 		return view('index');
 });
+
+
 // 数据表测试路由
 Route::get('/db',function(){
-    $notice = \DB::table('notice')->find(1);
-    echo($notice->content);
+    // $user = \DB::table('users')->where('name','1')->first();
+    var_dump(md5(time()));
 });
 
 
+
 //GITH GIStar创新团队中心
-Route::group(['prefix' => 'hub','namespace' => 'Admin','middleware'=>'auth'], function()
-{
+Route::group(['prefix' => 'hub','namespace' => 'Admin','middleware'=>['auth','msg']], function(){
+    Route::post('/postUpload', 'ShareController@upload');
+
     Route::resource('/something', 'SomeThingController');
     Route::resource('/notice', 'NoticeController');
+    Route::resource('/msg', 'MessageController');
+    Route::get('noread', function () {
+        return view('admin.reclistmessage');
+    });
 
     Route::get('/', 'NoticeController@home');
+
+    Route::get('/dido', function () {
+        return view('admin.dido');
+    });
+
+    Route::get('/time', function () {
+        return view('admin.time');
+    });
 
 //    冒泡
     Route::resource('/bubble','BubblesController');
@@ -65,7 +81,8 @@ Route::group(['prefix' => 'hub','namespace' => 'Admin','middleware'=>'auth'], fu
            return view('admin.adduser')->with('error','确认密码不一致，请重试');
         }else{
             \DB::table('users')->insertGetId(
-                ['name' => $request->input('name'), 'email' => $request->input('email'), 'password' => Hash::make($request->input('password'))]
+                ['name' => $request->input('name'), 'email' => $request->input('email'),'tel'=>$request->input('tel'),
+                 'password' => Hash::make($request->input('password'))]
             );
         }
 
@@ -76,11 +93,12 @@ Route::group(['prefix' => 'hub','namespace' => 'Admin','middleware'=>'auth'], fu
 //        \DB::table('users')->where('id','=', $id)->delete();
 //        return redirect('/hub/user');
 //    });
-//    项目
-    Route::get('/project',function(){
-        return view('admin.project');
-    });
-//    分享
+
+    Route::resource('/project','ProjectController');
+    Route::resource('/task','TaskController');
+    Route::get('/{project}/task/create','TaskController@createNew')->where('project', '[0-9]+');
+
+
     Route::resource('/share', 'ShareController');
     Route::get('/jishu','ShareController@jishu');
     Route::get('/qinggan','ShareController@qinggan');

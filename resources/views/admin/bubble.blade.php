@@ -5,13 +5,13 @@
     <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-dashboard"></i> 仪表盘</a>
         <ul>
             <li><a href="{{ url('/hub') }}"><i class="icon icon-dashboard"></i> <span>仪表盘</span></a> </li>
-            <li class="active"> <a href="{{ url('/hub/bubble') }}"><i class="icon  icon-comments-alt"></i> <span>冒泡</span></a> </li>
+            <li class="active"> <a href="{{ url('/hub/bubble') }}"><i class="icon  icon-comments-alt"></i> <span>每日一句</span></a> </li>
             <li><a href="{{ url('/hub/user') }}"><i class="icon icon-user"></i> <span>成员</span></a></li>
             <li><a href="{{ url('/hub/something') }}"><i class="icon icon-user"></i> <span>合作信息</span></a></li>
             <li class="submenu"> <a href="#"><i class="icon icon-inbox"></i> <span>项目</span> <span class="label label-important">2</span></a>
                 <ul>
-                    <li><a href="form-common.html">创建项目</a></li>
-                    <li><a href="form-validation.html">查看所有项目</a></li>
+                    <li><a href="{{ url('hub/project/create') }}">创建项目</a></li>
+                    <li><a href="{{ url('hub/project') }}">查看所有项目</a></li>
                 </ul>
             </li>
             <li class="submenu"> <a href="#"><i class="icon icon-star"></i> <span>分享</span> <span class="label label-important">3</span></a>
@@ -21,6 +21,7 @@
                     <li><a href="{{ url('hub/shenghuo') }}">生活</a></li>
                 </ul>
             </li>
+            <li> <a href="{{ url('/hub/time') }}"><i class="icon icon-bell"></i> <span>叮咚时间助手</span></a> </li>
 
         </ul>
     </div>
@@ -39,12 +40,16 @@
             <div class="row-fluid">
                 <div class="widget-box">
                     <div class="widget-title">
-                        <h5>泡泡发射机</h5>
+                        <h5>每天一句</h5>
                     </div>
-                    <form action="{{ url('/hub/bubble') }}" method="post">
+                    <form action="{{ empty($bubble_one)? url('/hub/bubble/'): url('/hub/bubble/'.$bubble_one->id)}}" method="post">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                        @if(!empty($bubble_one))
+                            <input type="hidden" name="_method" value="PATCH">
+                        @endif
                         <div class="controls">
-                            <textarea type="text" placeholder="冒个泡泡~刷刷存在感..." class="span12 m-wrap" style="resize:none;height: 100px " name="content"></textarea>
+                            <textarea type="text" placeholder="感受潜移默化的力量，每天对自己说一句..." class="span12 m-wrap" style="resize:none;height: 100px " name="content">{{ empty(!$bubble_one)? $bubble_one->content:''}}</textarea>
                         </div>
                         <button type="submit" class="btn btn-success" style="float: right;margin-right: 20px;margin-bottom: 10px;">提交</button>
                         <div class="clearfix"></div>
@@ -57,6 +62,19 @@
                             <div class="new-update clearfix"><i class="icon-user"></i>
                                 <div class="update-done"><a href="#" title=""><strong>{{ $bubble->user->name }}</strong></a> <span>{{ $bubble->content }}</span> </div>
                                 <div class="update-date"><span class="update-day">{{ substr($bubble->created_at,8,2) }}</span>{{ substr($bubble->created_at,5,2) }}</div>
+                                <div class="pull-right" style="margin-top: 10px;">
+                                    <a class="tip" href="{{ url('hub/bubble/'.$bubble->id.'/edit') }}" data-original-title="Edit Task"><i class="icon-pencil"></i></a>
+                                    <form id="delete" action="{{ url('/hub/bubble/'.$bubble->id) }}" method="post" style="display: inline-block;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                       <a href="javascript:validate()"><i id="form-submit" class="icon-remove"></i></a>
+                                    </form>
+                                </div>
+                                <script>
+                                    function validate() {
+                                        document.getElementById('delete').submit();
+                                    }
+                                </script>
                             </div>
                         @endforeach
                     </div>

@@ -6,13 +6,13 @@
     <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-dashboard"></i> 仪表盘</a>
         <ul>
             <li><a href="{{ url('/hub') }}"><i class="icon icon-dashboard"></i> <span>仪表盘</span></a> </li>
-            <li> <a href="{{ url('/hub/bubble') }}"><i class="icon  icon-comments-alt"></i> <span>冒泡</span></a> </li>
+            <li> <a href="{{ url('/hub/bubble') }}"><i class="icon  icon-comments-alt"></i> <span>每日一句</span></a> </li>
             <li><a href="{{ url('/hub/user') }}"><i class="icon icon-user"></i> <span>成员</span></a></li>
             <li><a href="{{ url('/hub/something') }}"><i class="icon icon-bullhorn"></i> <span>合作信息</span></a></li>
             <li class="submenu"> <a href="#"><i class="icon icon-inbox"></i> <span>项目</span> <span class="label label-important">2</span></a>
                 <ul>
-                    <li><a href="form-common.html">创建项目</a></li>
-                    <li><a href="form-validation.html">查看所有项目</a></li>
+                    <li><a href="{{ url('hub/project/create') }}">创建项目</a></li>
+                    <li><a href="{{ url('hub/project') }}">查看所有项目</a></li>
                 </ul>
             </li>
             <li class="submenu active"> <a href="#"><i class="icon icon-star"></i> <span>分享</span> <span class="label label-important">3</span></a>
@@ -22,6 +22,7 @@
                     <li><a href="{{ url('hub/shenghuo') }}">生活</a></li>
                 </ul>
             </li>
+            <li> <a href="{{ url('/hub/time') }}"><i class="icon icon-bell"></i> <span>叮咚时间助手</span></a> </li>
 
         </ul>
     </div>
@@ -39,7 +40,8 @@
             <!--Chart-box-->
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"><i class="icon-bullhorn"></i></span>
-                    <h5>所有分享</h5>
+                    <h5>{{ $title }}分享</h5>
+                    <a class="btn btn-mini btn-info" href="http://localhost:8000/hub/share/create" style="float: right;padding: 7px;">发布分享</a>
                 </div>
                 <div class="widget-content nopadding">
                     <table class="table table-bordered data-table">
@@ -58,11 +60,22 @@
                                 <td class="center" style="text-align: center">
                                     <a class="btn btn-mini btn-info" href="{{ url('/hub/share/'.$share->id) }}">查看</a>
 
-                                    <form action="{{ url('/hub/share/'.$share->id) }}" method="post" style="display: inline-block;">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <button type="submit" class="btn btn-mini btn-danger">删除</button>
-                                    </form>
+                                    <div class="btn-group">
+                                        <button data-toggle="dropdown" class="btn btn-mini btn-warning dropdown-toggle">操作 <span class="caret"></span></button>
+                                        <ul class="dropdown-menu" style="padding: 0;margin: 0;">
+                                            <li>
+                                                <a class="btn btn-mini btn-info" style="color: #ffffff;line-height: 20px;margin: 0;padding: 0;" href="{{url('hub/share/'.$share->id.'/edit')}}">修改</a>
+                                            </li>
+                                            <li>
+                                                <form action="{{ url('/hub/share/'.$share->id) }}" method="post" style="display: block;">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <button type="submit" class="btn btn-block btn-mini btn-danger">删除</button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                 </td>
                             </tr>
                         @endforeach

@@ -5,14 +5,14 @@
     <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-dashboard"></i> 仪表盘</a>
         <ul>
             <li><a href="{{ url('/hub') }}"><i class="icon icon-dashboard"></i> <span>仪表盘</span></a> </li>
-            <li> <a href="{{ url('/hub/bubble') }}"><i class="icon  icon-comments-alt"></i> <span>冒泡</span></a> </li>
+            <li> <a href="{{ url('/hub/bubble') }}"><i class="icon  icon-comments-alt"></i> <span>每日一句</span></a> </li>
             <li><a href="{{ url('/hub/user') }}"><i class="icon icon-user"></i> <span>成员</span></a></li>
             <li><a href="{{ url('/hub/something') }}"><i class="icon icon-bullhorn"></i> <span>合作信息</span></a></li>
 
             <li class="submenu"> <a href="#"><i class="icon icon-inbox"></i> <span>项目</span> <span class="label label-important">2</span></a>
                 <ul>
-                    <li><a href="form-common.html">创建项目</a></li>
-                    <li><a href="form-validation.html">查看所有项目</a></li>
+                    <li><a href="{{ url('hub/project/create') }}">创建项目</a></li>
+                    <li><a href="{{ url('hub/project') }}">查看所有项目</a></li>
                 </ul>
             </li>
             <li class="submenu active"> <a href="#"><i class="icon icon-star"></i> <span>分享</span> <span class="label label-important">3</span></a>
@@ -22,6 +22,7 @@
                     <li><a href="{{ url('hub/shenghuo') }}">生活</a></li>
                 </ul>
             </li>
+            <li> <a href="{{ url('/hub/time') }}"><i class="icon icon-bell"></i> <span>叮咚时间助手</span></a> </li>
 
         </ul>
     </div>
@@ -39,9 +40,11 @@
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-list-alt"></i></span>
                     <h5>{{ $share->title }}</h5>
+                    <a  style="float: right;margin-right: 10px;margin-top: 8px;" href="javascript:history.back();" class="btn btn-primary btn-mini">返回</a>
                     <h6 style="float: right;padding-right: 10px;"><code>{{ $share->user->name }}</code></h6>
                 </div>
-                <div class="widget-content">{{ $share->content }}</div>
+                <div class="widget-content"><?php echo $share->content ?></div>
+
             </div>
         </div>
 

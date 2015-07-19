@@ -30,11 +30,10 @@
             </li>
             <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">信息</span><!--  <span class="label label-important">5</span> --> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i> 新的信息 </a></li>
+                    <li><a class="sAdd" title="" href="{{ url('hub/msg') }}"><i class="icon-plus"></i> 发件箱  </a></li>
                     <li class="divider"></li>
-                    <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> 收件箱 </a></li>
+                    <li><a class="sInbox" title="" href="{{ url('hub/noread') }}"><i class="icon-envelope"></i> 收件箱  @if (count($rec_new_message))<span class="badge badge-important">{{count($rec_new_message)}}</span> @endif</a></li>
                     <li class="divider"></li>
-                    <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i> 垃圾箱 </a></li>
                 </ul>
             </li>
             <li class=""><a title="" href="{{ url('/auth/logout') }}"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>

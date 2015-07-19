@@ -1,18 +1,18 @@
 @extends('_layouts.admin.default')
 
 @section('content')
-  
+
     <!--sidebar-menu-->
     <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-dashboard"></i> 仪表盘</a>
         <ul>
             <li class="active"><a href="{{ url('/hub') }}"><i class="icon icon-dashboard"></i> <span>仪表盘</span></a> </li>
-            <li> <a href="{{ url('/hub/bubble') }}"><i class="icon  icon-comments-alt"></i> <span>冒泡</span></a> </li>
+            <li> <a href="{{ url('/hub/bubble') }}"><i class="icon  icon-comments-alt"></i> <span>每日一句</span></a> </li>
             <li><a href="{{ url('/hub/user') }}"><i class="icon icon-user"></i> <span>成员</span></a></li>
             <li><a href="{{ url('/hub/something') }}"><i class="icon icon-bullhorn"></i> <span>合作信息</span></a></li>
             <li class="submenu"> <a href="#"><i class="icon icon-inbox"></i> <span>项目</span> <span class="label label-important">2</span></a>
                 <ul>
-                    <li><a href="form-common.html">创建项目</a></li>
-                    <li><a href="form-validation.html">查看所有项目</a></li>
+                    <li><a href="{{ url('hub/project/create') }}">创建项目</a></li>
+                    <li><a href="{{ url('hub/project') }}">查看所有项目</a></li>
                 </ul>
             </li>
             <li class="submenu"> <a href="#"><i class="icon icon-star"></i> <span>分享</span> <span class="label label-important">3</span></a>
@@ -22,6 +22,7 @@
                     <li><a href="{{ url('hub/shenghuo') }}">生活</a></li>
                 </ul>
             </li>
+            <li> <a href="{{ url('/hub/time') }}"><i class="icon icon-bell"></i> <span>叮咚时间助手</span></a> </li>
 
         </ul>
     </div>
@@ -38,7 +39,7 @@
         <div class="container-fluid">
             <div class="quick-actions_homepage">
                 <ul class="quick-actions">
-                    <li class="bg_ls span3"> <a href="{{ url('/hub/heard') }}"> <i class="icon-signal"></i> 六项精进</a> </li>
+                    <li class="bg_ls span3"> <a href="{{ url('/hub/heard') }}"> <i class="icon-signal"></i> 每日必看</a> </li>
                     <li class="bg_lo span3"> <a href="{{ url('/hub/howtostudy') }}"> <i class="icon-signal"></i> 学习指南</a> </li>
                     <li class="bg_lg span3"> <a href="{{ url('/hub/mustknow') }}"> <i class="icon-signal"></i> 入团须知</a> </li>
                 </ul>
@@ -60,9 +61,9 @@
                             </div>
                             <div class="span3">
                                 <ul class="site-stats">
-                                    <li class="bg_lh"><i class="icon-user"></i> <strong>{{ $data['user'] }}</strong> <small>所有会员</small></li>
-                                    <li class="bg_lh"><i class="icon-inbox"></i> <strong>{{ $data['user'] }}</strong> <small>所有项目 </small></li>
-                                    <li class="bg_lh"><i class="icon-star"></i> <strong>{{ $data['share'] }}</strong> <small>所有分享</small></li>
+                                    <li class="bg_lh"><i class="icon-user"></i> <strong>{{ isset($data['user'])?$data['user']:0 }}</strong> <small>所有会员</small></li>
+                                    <li class="bg_lh"><i class="icon-inbox"></i> <strong>{{ isset($data['project'])?$data['project']:0 }}</strong> <small>所有项目 </small></li>
+                                    <li class="bg_lh"><i class="icon-star"></i> <strong>{{isset($data['share'])?$data['share']:0 }}</strong> <small>所有分享</small></li>
                                     <li class="bg_lh">
                                         <i class="icon-edit"></i> <a href="{{ url('hub/notice/1/edit') }}" style="display: block;color: #EEEEEE"><strong>&nbsp;</strong> <small>修改公告</small></a>
                                     </li>
